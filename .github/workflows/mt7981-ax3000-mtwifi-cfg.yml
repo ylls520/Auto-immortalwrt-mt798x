@@ -28,11 +28,6 @@ env:
   REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
   REPO_BRANCH: openwrt-21.02
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: config/360T7.config
-  DIY_P1_SH: script/diy-part1.sh
-  DIY_P2_SH: script/diy-part5.sh
-  SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
@@ -145,17 +140,16 @@ jobs:
       uses: actions/upload-artifact@main
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: 360t7-immortalwrt-mt798x固件
+        name: mt7981-ax3000-mtwifi-cfg
         path: ${{ env.FIRMWARE }}
 
     - name: 生成release标签
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
       run: |
-        echo -e "✅ immortalwrt-mt798x 源码版本，256M运存建议时常重启一次，不然容易出现爆运存导致卡网" >> release.txt
-        echo "release_tag=$(date +"%Y.%m.%d-%H%M")-360t7">> $GITHUB_OUTPUT
+        echo -e "✅ immortalwrt-mt798x-ax3000-mtwifi-cfg 源码版本，256M运存建议时常重启一次，不然容易出现爆运存导致卡网" >> release.txt
+        echo "release_tag=$(date +"%Y.%m.%d-%H%M")-ax3000-mtwifi-cfg">> $GITHUB_OUTPUT
         touch release.txt
-        echo "360t7" >> release.txt
         echo "📥 固件下载" >> release.txt
         echo "status=success" >>$GITHUB_OUTPUT
 
